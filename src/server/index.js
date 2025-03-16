@@ -1,22 +1,6 @@
 import express, { json } from 'express'
+import transactionsRouter from './routes/transactions.js'
 
-// /home/vladimir/Desktop/test/101-grooup/src/server/index.js
-const store = [
-  {
-    id: 1,
-    date: '2024-02-01',
-    type: 'income',
-    amount: 15000,
-    description: 'Оплата за проект',
-  },
-  {
-    id: 2,
-    date: '2024-02-02',
-    type: 'expense',
-    amount: 5000,
-    description: 'Оплата подрядчику',
-  },
-]
 const app = express()
 const PORT = process.env.PORT || 3000
 
@@ -28,9 +12,7 @@ app.use((req, res, next) => {
   next()
 })
 
-app.get('/api/transactions', (req, res) => {
-  res.json(store)
-})
+app.use('/api/transactions', transactionsRouter)
 
 // Start the server
 app.listen(PORT, () => {

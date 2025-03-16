@@ -9,7 +9,6 @@ export const useTransactionStore = defineStore('transaction', () => {
   function fetchAllTransactions() {
     return transactionService.getAll().then((data) => {
       transactions.value = data
-      console.log(data)
     })
   }
 
