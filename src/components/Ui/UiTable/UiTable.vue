@@ -44,11 +44,14 @@
         </tr>
       </tbody>
     </table>
+
+    <UiButton />
   </div>
 </template>
 <script setup lang="ts">
 import type { IEmits, IProps } from './types'
 import useSort from './composables/useSort'
+import UiButton from '@/components/Ui/UiButton'
 
 const props = withDefaults(defineProps<IProps>(), {
   columns: () => ['id', 'type'],

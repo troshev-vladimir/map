@@ -3,9 +3,9 @@
 </template>
 <script lang="ts" setup>
 import UiTable from '@/components/Ui/UiTable/UiTable.vue'
-import { useTransactionStore } from '@/stores/transaction'
+import { useTransactionStore } from '@/stores/trip'
 import { storeToRefs } from 'pinia'
-import type { Transaction } from '@/app/models/transaction.model'
+import type { Transaction } from '@/app/models/trip.model'
 import { ref } from 'vue'
 
 const { transactions } = storeToRefs(useTransactionStore())

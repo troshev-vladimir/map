@@ -4,7 +4,7 @@
       <slot name="label">{{ label }}</slot>
     </p>
     <div
-      class="flex flex-wrap items-center justify-between gap-2 rounded-md border border-gray-300 p-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+      class="flex flex-wrap items-center justify-between gap-2 rounded-md border border-gray-300 p-2 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none dark:border-b-blue-900"
       @click="toggleDropdown"
     >
       <!-- Чипсы выбранных элементов -->
@@ -49,7 +49,7 @@
 
     <div
       v-if="isDropdownOpen"
-      class="absolute z-10 mt-1 max-h-60 w-full overflow-y-auto rounded-md border border-gray-300 bg-white text-amber-950 shadow-lg"
+      class="absolute z-10 mt-1 max-h-60 w-full overflow-y-auto rounded-md border border-gray-300 bg-white text-amber-950 shadow-lg dark:border-gray-700 dark:bg-gray-700 dark:text-amber-100"
     >
       <input
         v-if="isMultiSelect"
@@ -62,8 +62,8 @@
         v-for="option in filteredOptions"
         :key="option.value"
         @click="handleOptionClick(option.value)"
-        class="cursor-pointer px-4 py-2 hover:bg-blue-100"
-        :class="{ 'bg-blue-100': isSelected(option.value) }"
+        class="cursor-pointer px-4 py-2 hover:bg-blue-200 dark:bg-blue-700 dark:hover:bg-blue-600"
+        :class="{ 'bg-blue-100 dark:bg-blue-900': isSelected(option.value) }"
       >
         {{ option.label }}
       </div>

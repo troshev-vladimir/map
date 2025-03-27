@@ -7,7 +7,7 @@
 import TransactionsTable from '@/components/Features/TransactionsTable.vue'
 import TransactionsFilter, { type IFilters } from '@/components/Features/TransactionsFilter.vue'
 import { reactive, onMounted } from 'vue'
-import { useTransactionStore } from '@/stores/transaction'
+import { useTransactionStore } from '@/stores/trip'
 
 const filters = reactive<IFilters>({
   dateFrom: '',
