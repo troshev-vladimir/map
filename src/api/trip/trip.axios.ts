@@ -5,19 +5,21 @@ import type { UpdateTripDTO } from '@/app/repositories/trip/dto/updateTripDTO'
 import type { TripRepository } from '@/app/repositories/trip/repositoryInterface'
 
 export class TripApi implements TripRepository {
+  private axiosInstance = axios
+
   add(dto: AddTripDTO): Promise<TripModel> {
-    return axios.post('/transactions', dto)
+    return this.axiosInstance.post('/trips', dto)
   }
   getAll(): Promise<TripModel[]> {
-    return axios.get('/transactions')
+    return this.axiosInstance.get('/trips') || []
   }
   getById(id: string): Promise<TripModel> {
-    return axios.get(`/transactions/${id}`)
+    return this.axiosInstance.get(`/trips/${id}`)
   }
   update(dto: UpdateTripDTO): Promise<TripModel> {
-    return axios.put(`/transactions/${dto.id}`, dto)
+    return this.axiosInstance.put(`/trips/${dto.id}`, dto)
   }
   delete(id: string): Promise<TripModel> {
-    return axios.delete(`/transactions/${id}`)
+    return this.axiosInstance.delete(`/trips/${id}`)
   }
 }

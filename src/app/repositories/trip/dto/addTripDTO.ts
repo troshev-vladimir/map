@@ -1,6 +1,6 @@
 import type PointModel from '@/app/models/point.model'
 
-export class AddTripDTO {
+export abstract class AddTripDTO {
   constructor(
     readonly description: string,
     readonly title: string,

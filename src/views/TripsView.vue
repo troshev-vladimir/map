@@ -1,13 +1,13 @@
 <template>
-  <h1 class="text-3xl font-bold underline">Transactons</h1>
-  <TransactionsFilter class="my-5" v-model="filters" />
-  <TransactionsTable />
+  <h1 class="text-3xl font-bold underline">Trips</h1>
+  <TripsFilter class="my-5" v-model="filters" />
+  <TripsTable />
 </template>
 <script setup lang="ts">
-import TransactionsTable from '@/components/Features/TransactionsTable.vue'
-import TransactionsFilter, { type IFilters } from '@/components/Features/TransactionsFilter.vue'
+import TripsTable from '@/components/Features/TripsTable.vue'
+import TripsFilter, { type IFilters } from '@/components/Features/TripsFilter.vue'
 import { reactive, onMounted } from 'vue'
-import { useTransactionStore } from '@/stores/trip'
+import { useTripStore } from '@/stores/trip'
 
 const filters = reactive<IFilters>({
   dateFrom: '',
@@ -15,9 +15,9 @@ const filters = reactive<IFilters>({
   type: 'income',
 })
 
-const { fetchAllTransactions } = useTransactionStore()
+const { fetchAllTrips } = useTripStore()
 
 onMounted(async () => {
-  await fetchAllTransactions()
+  await fetchAllTrips()
 })
 </script>

@@ -12,11 +12,14 @@ const router = createRouter({
         layout: 'default',
       },
     },
-    // {
-    //   path: '/about',
-    //   name: 'about',
-    //   component: () => import('../views/AboutView.vue'),
-    // },
+    {
+      path: '/point/:id',
+      name: 'point',
+      component: () => import('../views/PointView.vue'),
+      meta: {
+        layout: 'default',
+      },
+    },
   ],
 })
 
