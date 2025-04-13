@@ -1,10 +1,17 @@
-export type IProps = {
-  columns: Array<string>
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  rows: Record<string, any>[]
+import type { TripModel } from '@/app/models/trip.model'
+
+export type TableCol<T> = {
+  title: string
+  key: keyof T
+  sortable?: boolean
 }
 
-export type IEmits = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  (e: 'sort', value: Record<string, any>): void
+export type IProps<T> = {
+  columns: TableCol<T>[]
+  rows: T[]
+}
+
+export type IEmits<T> = {
+  (e: 'sort', value: T): void
+  (e: 'rowClick', value: T): void
 }

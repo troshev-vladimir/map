@@ -5,7 +5,8 @@ import type PointModel from '@/app/models/point.model'
 import PointService from '@/app/services/point.service'
 import useSystemData from './composables/useSystemData'
 
-const pointService = new PointService(new PointMockApi())
+const pointRepository = new PointMockApi()
+const pointService = new PointService(pointRepository)
 
 export const usePointStore = defineStore('point', () => {
   const point = ref<PointModel>()

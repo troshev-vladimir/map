@@ -4,14 +4,14 @@
       <thead class="bg-gray-50 text-xs text-gray-700 uppercase dark:bg-gray-700 dark:text-gray-400">
         <tr>
           <th
-            @click="sortBy(col)"
+            @click="sortBy(col.key)"
             scope="col"
             class="relative px-6 py-3"
             v-for="(col, i) in columns"
             :key="i"
-            :class="{ 'bg-sky-50': isSorted(col) }"
+            :class="{ 'bg-sky-50': isSorted(col.key) }"
           >
-            {{ col }}
+            {{ col.title }}
 
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -20,7 +20,7 @@
               stroke-width="1.5"
               stroke="currentColor"
               class="absolute bottom-2 inline-flex size-6"
-              v-if="isSorted(col)"
+              v-if="isSorted(col.key)"
               :class="{ 'rotate-z-180': currentSort.desc }"
             >
               <path
@@ -37,6 +37,7 @@
           class="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800"
           v-for="(row, idx) in filteredRows()"
           :key="idx"
+          @click="$emit('rowClick', row)"
         >
           <td class="px-6 py-4" v-for="(rowItem, index) in row" :key="index">
             {{ rowItem }}
@@ -48,30 +49,27 @@
     <UiButton />
   </div>
 </template>
-<script setup lang="ts">
-import type { IEmits, IProps } from './types'
+<script setup lang="ts" generic="Row extends Record<string, any>">
+import type { IEmits, IProps, TableCol } from './types'
 import useSort from './composables/useSort'
 import UiButton from '@/components/Ui/UiButton'
 
-const props = withDefaults(defineProps<IProps>(), {
-  columns: () => ['id', 'type'],
-  rows: () => [
-    {
-      id: '2',
-      type: 'id',
-    },
-  ],
+const props = withDefaults(defineProps<IProps<Row>>(), {
+  columns: () => [] as TableCol<Row>[],
+  rows: () => [] as Row[],
 })
 
-const emit = defineEmits<IEmits>()
+const emit = defineEmits<IEmits<Row>>()
 
 const { currentSort, isSorted, sortBy } = useSort(emit)
 
-const filteredRows = () => {
+const filteredRows = (): Row[] => {
   return props.rows.map((row) => {
-    return props.columns.map((col) => {
-      return row[col]
+    const filteredRow = {} as Row
+    props.columns.forEach((col) => {
+      filteredRow[col.key] = row[col.key]
     })
+    return filteredRow as Row
   })
 }
 </script>

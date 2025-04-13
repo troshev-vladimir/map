@@ -1,11 +1,21 @@
 <template>
   <h1 class="text-3xl font-bold underline">Trips</h1>
   <TripsFilter class="my-5" v-model="filters" />
-  <TripsTable />
+  <div class="flex gap-5">
+    <div class="w-1/2">
+      <h2 class="text-2xl font-bold">Map</h2>
+      <MapItem />
+    </div>
+    <div class="w-1/2">
+      <h2 class="text-2xl font-bold">List</h2>
+      <TripsTable />
+    </div>
+  </div>
 </template>
 <script setup lang="ts">
 import TripsTable from '@/components/Features/TripsTable.vue'
 import TripsFilter, { type IFilters } from '@/components/Features/TripsFilter.vue'
+import MapItem from '@/components/Features/MapItem.vue'
 import { reactive, onMounted } from 'vue'
 import { useTripStore } from '@/stores/trip'
 

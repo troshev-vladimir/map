@@ -2,7 +2,7 @@ import { onMounted, reactive, watch } from 'vue'
 import type { IEmits } from '../types'
 import { useRoute, useRouter } from 'vue-router'
 
-export default function useSort(emit: IEmits) {
+export default function useSort<Row>(emit: IEmits<Row>) {
   const currentSort = reactive({
     sortBy: '',
     desc: false,
@@ -11,14 +11,14 @@ export default function useSort(emit: IEmits) {
   const router = useRouter()
   const route = useRoute()
 
-  const isSorted = (column: string) => {
-    return column === currentSort.sortBy
+  const isSorted = (column: unknown) => {
+    return String(column) === currentSort.sortBy
   }
 
-  const sortBy = (value: string) => {
-    currentSort.sortBy = value
+  const sortBy = (value: unknown) => {
+    currentSort.sortBy = String(value)
     currentSort.desc = !currentSort.desc
-    emit('sort', currentSort)
+    emit('sort', currentSort as Row)
   }
 
   const saveInQuery = () => {

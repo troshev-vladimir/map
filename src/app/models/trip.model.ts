@@ -5,8 +5,8 @@ export class TripModel {
     readonly id: ID,
     readonly description: string,
     readonly title: string,
-    readonly startDate: Date,
-    readonly endDate: Date,
+    readonly startDate: Date | string,
+    readonly endDate: Date | string,
     readonly isCompleted: boolean,
     readonly points: PointModel[],
   ) {}

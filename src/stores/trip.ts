@@ -2,13 +2,14 @@ import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import type { TripModel } from '@/app/models/trip.model'
 import TripService from '@/app/services/trip.service'
-import { TripApi } from '@/api/trip/trip.axios'
+import { TripMockApi } from '@/api/trip/trip.mock'
 import useSystemData from './composables/useSystemData'
 
-const tripService = new TripService(new TripApi())
+const tripService = new TripService(new TripMockApi())
 
-export const useTripStore = defineStore('transaction', () => {
+export const useTripStore = defineStore('trips', () => {
   const trips = ref<TripModel[]>([])
+  const selectedTrip = ref<TripModel | null>(null)
 
   const { isActual, isLoadding } = useSystemData()
 
@@ -28,5 +29,15 @@ export const useTripStore = defineStore('transaction', () => {
     })
   }
 
-  return { fetchAllTrips, trips, isLoadding }
+  function selectTrip(id: ID) {
+    const trip = tripService.selectTrip(id, trips.value)
+
+    if (trip) {
+      selectedTrip.value = trip
+    } else {
+      selectedTrip.value = null
+    }
+  }
+
+  return { fetchAllTrips, selectTrip, selectedTrip, trips, isLoadding }
 })
