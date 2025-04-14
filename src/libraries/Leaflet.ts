@@ -1,7 +1,8 @@
+import type { IMapRepository } from '@/app/repositories/Map.interface'
 import L, { type LatLngLiteral } from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 
-export default class LeafletRepository {
+export default class LeafletRepository implements IMapRepository {
   private map: L.Map | null = null
   private markers: L.Marker[] = []
 

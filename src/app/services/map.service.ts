@@ -21,12 +21,12 @@ export default class MapService {
 
       this.mapInstance?.addMarker(
         coordinates,
-        this.makePopup(point.name, point.description, point.photos[0], point.id),
+        this.makePopupWithImage(point.name, point.description, point.photos[0], point.id),
       )
     })
   }
 
-  private makePopup(name: string, description: string, image: string, id: ID) {
+  private makePopupWithImage(name: string, description: string, image: string, id: ID) {
     return L.popup({
       minWidth: 300,
       maxWidth: 500,
