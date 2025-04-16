@@ -31,7 +31,7 @@ onMounted(() => {
 
 <style lang="scss">
 #map {
-  height: 600px;
+  height: 100%;
   width: 100%;
 }
 

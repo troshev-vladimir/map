@@ -1,7 +1,7 @@
 <template>
   <div
     id="default-layout"
-    class="default-layout"
+    class="default-layout h-screen"
     data-layout="default"
     data-page="default"
   >

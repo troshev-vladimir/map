@@ -22,7 +22,13 @@ export const useTripStore = defineStore('trips', () => {
       })
     }
 
-    return tripService.getAll().then((data) => {
+    const pagination = {
+      page: 2,
+      perPage: 200,
+      total: 1000,
+    }
+
+    return tripService.getAll(pagination).then((data) => {
       trips.value = data
       isActual.value = true
       isLoadding.value = false

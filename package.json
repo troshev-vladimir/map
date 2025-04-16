@@ -19,6 +19,7 @@
     "@tailwindcss/postcss": "^4.0.14",
     "@tailwindcss/vite": "^4.0.14",
     "@vuepic/vue-datepicker": "^11.0.2",
+    "@vueuse/core": "^13.1.0",
     "click-outside-vue3": "^4.0.1",
     "express": "^4.21.2",
     "leaflet": "^1.9.4",

@@ -1,5 +1,3 @@
-import type { TripModel } from '@/app/models/trip.model'
-
 export type TableCol<T> = {
   title: string
   key: keyof T

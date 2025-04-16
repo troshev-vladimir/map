@@ -2,7 +2,7 @@
   <h1 class="text-3xl font-bold underline">Trips</h1>
   <TripsFilter class="my-5" v-model="filters" />
   <div class="flex gap-5">
-    <div class="w-1/2">
+    <div class="h-200 w-1/2">
       <h2 class="text-2xl font-bold">Map</h2>
       <MapItem />
     </div>
