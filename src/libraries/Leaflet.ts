@@ -3,38 +3,79 @@ import L, { type LatLngLiteral } from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 
 export default class LeafletRepository implements IMapRepository {
-  private map: L.Map | null = null
-  private markers: L.Marker[] = []
+  public map: L.Map | null = null
+  public markers: L.Marker[] = []
+  private layerControl: L.Control.Layers | null = null
 
-  constructor(id: string, coordinates: LatLngLiteral) {
+  constructor(id: string, coordinates?: LatLngLiteral) {
     this.initMap(id, coordinates)
   }
 
-  private initMap(id: string, coordinates: LatLngLiteral) {
-    const map = L.map(id).setView([coordinates.lat, coordinates.lng], 13)
+  private initMap(id: string, coordinates?: LatLngLiteral) {
+    const osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '© OpenStreetMap',
+    })
 
-    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    const osmHOT = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+      maxZoom: 19,
       attribution:
-        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    }).addTo(map)
+        '© OpenStreetMap contributors, Tiles style by Humanitarian OpenStreetMap Team hosted by OpenStreetMap France',
+    })
+
+    const openTopoMap = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution:
+        'Map data: © OpenStreetMap contributors, SRTM | Map style: © OpenTopoMap (CC-BY-SA)',
+    })
+
+    const baseMaps = {
+      OpenStreetMap: osm,
+      '<span>OpenStreetMap.HOT</span>': osmHOT,
+      OpenTopoMap: openTopoMap,
+    }
+
+    const map = L.map(id, {
+      center: [39.73, -104.99],
+      zoom: 10,
+      layers: [osm],
+    })
+
+    if (coordinates) map.setView([coordinates.lat, coordinates.lng], 13)
+    else map.locate({ setView: true, maxZoom: 13 })
+
+    this.layerControl = L.control.layers(baseMaps).addTo(map)
 
     this.map = map
   }
 
-  public addMarker(coordinates: LatLngLiteral, popupText: string | L.Popup) {
-    if (!this.map) return
-
+  private createMarker(coordinates: LatLngLiteral, popupText: string | L.Popup): L.Marker {
     const options = {
       riseOnHover: true,
       pane: 'markerPane',
       autoPanOnFocus: true,
     }
 
-    const marker = L.marker([coordinates.lat, coordinates.lng], options).addTo(this.map)
-    // marker.bindTooltip('my tooltip text').openTooltip()
+    const marker = L.marker([coordinates.lat, coordinates.lng], options)
     marker.bindPopup(popupText)
+    // marker.bindTooltip('my tooltip text').openTooltip()
     this.markers.push(marker)
+
     return marker
+  }
+
+  public addMarkerToMap(coordinates: LatLngLiteral, popupText: string | L.Popup) {
+    if (!this.map) return
+
+    const marker = this.createMarker(coordinates, popupText)
+    marker.addTo(this.map)
+  }
+
+  public addMarkerToLayer(coordinates: LatLngLiteral, popupText: string | L.Popup) {
+    if (!this.map) return
+    this.createMarker(coordinates, popupText)
+    const trip = L.layerGroup(this.markers)
+    this.layerControl?.addOverlay(trip, 'trip')
   }
 
   public addPolygon(points: LatLngLiteral[], polygonText?: string) {
@@ -69,8 +110,10 @@ export default class LeafletRepository implements IMapRepository {
 
   public removeMarkers() {
     if (!this.map) return
+    L.layerGroup(this.markers)
     this.markers.forEach((marker) => {
       this.map?.removeLayer(marker)
+      this.layerControl?.removeLayer(marker)
     })
 
     this.markers = []

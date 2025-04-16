@@ -25,11 +25,6 @@ watch(
 )
 
 onMounted(() => {
-  // MapService.addMarker(map, mapcetner.value)
-  // MapService.addCircle(map, mapcetner.value)
-  // MapService.addPolygon(map, mapcetner.value)
-  // MapService.addPolyline(map, mapcetner.value)
-
   map = new MapService()
 })
 </script>

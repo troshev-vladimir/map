@@ -19,10 +19,12 @@ export default class MapService {
         lng: point.coordinates[1],
       }
 
-      this.mapInstance?.addMarker(
+      this.mapInstance?.addMarkerToMap(
         coordinates,
         this.makePopupWithImage(point.name, point.description, point.photos[0], point.id),
       )
+
+      this.mapInstance?.map?.setView(this.mapInstance.markers[0].getLatLng(), 13)
     })
   }
 
@@ -54,7 +56,6 @@ export default class MapService {
         }
 
         this.mapInstance = new LeafletRepository('map', currentCoordinates)
-
         // const cb = (coordinates: LatLngLiteral) => {
         //   this.mapInstance?.addMarker(coordinates, 'coordinates')
 
