@@ -2,31 +2,32 @@ import type { TripModel } from '@/app/models/trip.model'
 import type { AddTripDTO } from '@/app/repositories/trip/dto/addTripDTO'
 import type { UpdateTripDTO } from '@/app/repositories/trip/dto/updateTripDTO'
 import type { TripRepository } from '@/app/repositories/trip/repositoryInterface'
-import type { Pagination } from '../types'
+import type { Pagination, Responce } from '../types'
 
 export class TripMockApi implements TripRepository {
-  add(dto: AddTripDTO): Promise<TripModel> {
+  add(dto: AddTripDTO): Promise<Responce<TripModel>> {
     throw new Error('Method not implemented.')
   }
-  getAll(pagination: Pagination): Promise<TripModel[]> {
+  getAll(pagination: Pagination): Promise<Responce<TripModel[]>> {
     return new Promise((res) => {
       setTimeout(() => {
-        res(
-          [...(getMockData(1000) as unknown as TripModel[])].slice(
+        res({
+          data: [...(getMockData(50) as unknown as TripModel[])].slice(
             (pagination.page - 1) * pagination.perPage,
             pagination.page * pagination.perPage,
           ),
-        )
+          total: 50,
+        })
       }, 1000)
     })
   }
-  getById(id: string): Promise<TripModel> {
+  getById(id: string): Promise<Responce<TripModel>> {
     throw new Error('Method not implemented.')
   }
-  update(dto: UpdateTripDTO): Promise<TripModel> {
+  update(dto: UpdateTripDTO): Promise<Responce<TripModel>> {
     throw new Error('Method not implemented.')
   }
-  delete(id: string): Promise<TripModel> {
+  delete(id: string): Promise<Responce<TripModel>> {
     throw new Error('Method not implemented.')
   }
 }
