@@ -18,6 +18,17 @@ import TripsFilter, { type IFilters } from '@/components/Features/TripsFilter.vu
 import MapItem from '@/components/Features/MapItem.vue'
 import { reactive, onMounted } from 'vue'
 import { useTripStore } from '@/stores/trip'
+import useState from '@/composables/state'
+import { toReactive } from '@vueuse/core'
+
+const { setTheme } = useState()
+const { state } = toReactive(useState())
+
+onMounted(() => {
+  console.log(state)
+  setTheme(String('asdasd'))
+  console.log(state)
+})
 
 const filters = reactive<IFilters>({
   dateFrom: '',
